@@ -1,9 +1,9 @@
 package db
 
-// init mongoDB
-
 import (
-	// "go.mongodb.org/mongo-driver/bson"
+	"fmt"
+	"os"
+
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -14,7 +14,12 @@ var (
 )
 
 func Init() {
-	Client, _ = mongo.NewClient(options.Client().ApplyURI())
+	Client, _ = mongo.NewClient(options.Client().ApplyURI(os.Getenv("MONGO_URI")))
 	Client.Connect(nil)
+	fmt.Println("Connected to MongoDB")
 	DB = Client.Database("imagecloud")
+}
+
+func GetDB() *mongo.Database {
+	return DB
 }

@@ -1,25 +1,17 @@
 package main
 
 import (
-	// "flag"
-	// "fmt"
-	// "os"
-
 	"imagecloud/db"
 	"imagecloud/server"
 	"math/rand"
 	"time"
+
+	"github.com/joho/godotenv"
 )
 
 func main() {
 	rand.Seed(time.Now().UnixNano())
-	// environment := flag.String("e", "development", "")
-	// flag.Usage = func() {
-	// 	fmt.Println("Usage: server -e {mode}")
-	// 	os.Exit(1)
-	// }
-	// flag.Parse()
-	// config.Init(*environment)
+	godotenv.Load()
 	db.Init()
 	server.Init()
 }

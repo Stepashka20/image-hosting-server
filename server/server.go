@@ -1,7 +1,9 @@
 package server
 
+import "os"
+
 func Init() {
 
 	r := NewRouter()
-	r.Run(":1234")
+	r.Run(":" + os.Getenv("PORT"))
 }
