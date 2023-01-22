@@ -3,7 +3,6 @@ package controllers
 import (
 	"crypto/sha256"
 	"encoding/hex"
-	"fmt"
 	"io"
 	"math/rand"
 	"mime/multipart"
@@ -19,16 +18,13 @@ import (
 type UploadController struct{}
 
 func (u UploadController) Upload(c *gin.Context) {
-	fmt.Println("upload")
 	form, _ := c.MultipartForm()
 	files := form.File["upload"]
 	generalKey := RandKey(10)
 	allKeys := []string{}
 	for _, file := range files {
 		hash := CalcHash(file)
-		fmt.Println(hash)
 		image := models.Image{}.GetImageByHash(hash)
-		fmt.Println(image)
 		if image.Key != "" {
 			allKeys = append(allKeys, image.Key)
 			continue
@@ -44,7 +40,6 @@ func (u UploadController) Upload(c *gin.Context) {
 		image = models.Image{}.NewImage(key, hash, filename)
 		allKeys = append(allKeys, image.Key)
 	}
-	fmt.Println(allKeys)
 	models.Image{}.NewGroupImages(generalKey, allKeys)
 	c.JSON(http.StatusOK, gin.H{"message": "upload success", "key": generalKey})
 }

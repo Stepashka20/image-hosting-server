@@ -6,7 +6,6 @@ import (
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 
-	// "imagecloud/middlewares"
 	"github.com/gin-contrib/cors"
 )
 
@@ -24,7 +23,6 @@ func NewRouter() *gin.Engine {
 
 	api := router.Group("/api")
 	{
-		// upload
 		upload := new(controllers.UploadController)
 		api.POST("/upload", upload.Upload)
 

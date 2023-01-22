@@ -2,7 +2,6 @@ package models
 
 import (
 	"context"
-	"fmt"
 
 	"imagecloud/db"
 	"log"
@@ -25,7 +24,6 @@ func GetGroup(key string) ([]Image, error) {
 	var images []Image
 	var imgHash = map[string]Image{}
 	cur, err := images_collection.Find(ctx, bson.M{"key": bson.M{"$in": group.Keys}})
-	fmt.Println(cur)
 	if err != nil {
 		log.Fatal(err)
 		return []Image{}, err
@@ -34,8 +32,6 @@ func GetGroup(key string) ([]Image, error) {
 	for cur.Next(ctx) {
 		var image Image
 		cur.Decode(&image)
-		// fmt.Println(image)
-		// images = append(images, image)
 		imgHash[image.Key] = image
 	}
 	for _, key := range group.Keys {

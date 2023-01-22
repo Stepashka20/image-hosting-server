@@ -51,7 +51,6 @@ func (i Image) GetImageByHash(hash string) Image {
 	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
 	var image Image
 	res := collection.FindOne(ctx, bson.M{"hash": hash})
-	fmt.Println(res)
 	if res.Err() != nil {
 		return image
 	}
